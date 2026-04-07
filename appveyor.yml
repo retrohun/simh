@@ -63,7 +63,7 @@ build_script:
             }
           }
           if ($ncpus -ne '') {
-            $parallel = '-j' + $ncpus
+            $parallel = '-j' + $ncpus + ' NJOBS=' + $ncpus
             Write-Host "Building with $ncpus processors"
           }
           $commit_id_file = '.git-commit-id' 
