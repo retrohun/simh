@@ -483,6 +483,7 @@ t_bool (*sim_vm_fprint_stopped) (FILE *st, t_stat reason) = NULL;
 const char *sim_vm_release = NULL;
 const char *sim_vm_release_message = NULL;
 const char **sim_clock_precalibrate_commands = NULL;
+const char **sim_clock_precalibrate_cleanup_commands = NULL;
 
 
 /* Prototypes */

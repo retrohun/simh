@@ -3820,6 +3820,10 @@ for (tmr=0; tmr<=SIM_NTIMERS; tmr++) {
     if (rtc->hz)
         rtc->initd = rtc->currd = (int32)(((double)sim_precalibrate_ips) / rtc->hz);
     }
+if ((cmd = sim_clock_precalibrate_cleanup_commands)) {
+    while (*cmd)
+         exdep_cmd (EX_D, *(cmd++));
+    }
 reset_all_p (0);
 sim_run_boot_prep (RU_GO);
 for (tmr=0; tmr<=SIM_NTIMERS; tmr++) {
