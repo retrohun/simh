@@ -14441,7 +14441,7 @@ for (i=0; i < exp->size; i++) {
                 sprintf (env_name, "_EXPECT_MATCH_GROUP_%d", (int)j);
                 unsetenv (env_name);            /* Remove previous extra environment variables */
                 }
-            sim_exp_match_sub_count = ep->re_nsub;
+            sim_exp_match_sub_count = (size_t)(ep->re_nsub + 1);
             free (ovector);
             ovector = NULL;
             free (buf);
