@@ -17005,10 +17005,12 @@ if (sim_isalpha (*data) || (*data == '_')) {
         }
     gptr = _sim_get_env_special (data, string, string_size - 1);
     if (gptr) {
-        *svalue = strtotsv(string, &gptr, 0);
+        const char *eptr;
+
+        *svalue = strtotsv(gptr, &eptr, 0);
         sprint_val (string, *svalue, 10, string_size - 1, PV_LEFTSIGN);
         sim_debug (SIM_DBG_EXP_EVAL, &sim_scp_dev, "[Value: %s=%s]\n", data, string);
-        return ((*gptr == '\0') && (*string));
+        return ((*eptr == '\0') && (*string));
         }
     else {
         data = "";
