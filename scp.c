@@ -5268,12 +5268,12 @@ for (; *ip && (op < oend); ) {
                         if (do_arg[i] == NULL)
                             break;
                         else
-                            if ((sizeof(rbuf)-strlen(rbuf)) < (2 + strlen(do_arg[i]))) {
+                            if ((sizeof(rbuf)-strlen(rbuf)) >= (4 + strlen(do_arg[i]))) {
                                 if (strchr(do_arg[i], ' ')) { /* need to surround this argument with quotes */
                                     char quote = '"';
                                     if (strchr(do_arg[i], quote))
                                         quote = '\'';
-                                    sprintf(&rbuf[strlen(rbuf)], "%s%c%s%c\"", (i != 1) ? " " : "", quote, do_arg[i], quote);
+                                    sprintf(&rbuf[strlen(rbuf)], "%s%c%s%c", (i != 1) ? " " : "", quote, do_arg[i], quote);
                                     }
                                 else
                                     sprintf(&rbuf[strlen(rbuf)], "%s%s", (i != 1) ? " " : "", do_arg[i]);
