@@ -1637,7 +1637,7 @@ static const char simh_help1[] =
       "3Device and Unit\n"
       "+SET <dev> OCT|DEC|HEX|BIN   set device display radix\n"
       "+SET <dev> ENABLED           enable device\n"
-      "+SET <dev> DISABLED          disable device\n"
+      "+SET [-F] <dev> DISABLED     disable device; -F forces detach/cancel\n"
       "+SET <dev> DEBUG{=arg}       set device debug flags\n"
       "+SET <dev> NODEBUG={arg}     clear device debug flags\n"
       "+SET <dev> arg{,arg...}      set device parameters (see show modifiers)\n"
@@ -8615,7 +8615,8 @@ int32 num;
 t_stat r;
 double usec_factor = 1.0;
 const char *units = "";
-char runlimit[32];
+char runlimit[70];
+char *rptr;
 
 GET_SWITCHES (cptr);                                    /* get switches */
 if (0 == flag) {
@@ -8674,6 +8675,8 @@ if (sim_runlimit_switches & SWMASK ('T')) {
     if (sim_host_speed_factor () > 1.0)
         sim_messagef (SCPE_OK, "Slow host - adjusting RUNLIMIT from %d %s to %.1f %s\n", num, units, num * sim_host_speed_factor (), units);
     snprintf (runlimit, sizeof (runlimit), "%s", sim_fmt_secs (num * sim_host_speed_factor ()));
+    if ((rptr = strrchr (runlimit, ' ')))
+        *rptr = '\0';
     setenv ("SIM_RUNLIMIT", runlimit, 1);
     setenv ("SIM_RUNLIMIT_UNITS", units, 1);
     return sim_activate_after_d (&sim_runlimit_unit, sim_runlimit_d);
@@ -13476,7 +13479,6 @@ for (i=0; i<sim_brk_lnt; i++) {
         bp = bpt;
         }
     }
-memset (sim_brk_tab, 0, sim_brk_lnt*sizeof (BRKTAB*));
 sim_brk_lnt = SIM_BRK_INILNT;
 sim_brk_tab = (BRKTAB **) realloc (sim_brk_tab, sim_brk_lnt*sizeof (BRKTAB*));
 if (sim_brk_tab == NULL)
