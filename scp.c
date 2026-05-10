@@ -3318,7 +3318,13 @@ if (docmdp) {
             stat = stat;    /* current working directory which we've already checked */
         }
     if (SCPE_BARE_STATUS(stat) == SCPE_OPENERR) {
-        snprintf(nbuf, sizeof (nbuf), "\"%s%s%sLibrary%sPreferences%ssimh.ini\"", cptr2 ? cptr2 : "", cptr, strchr (cptr, '/') ? "/" : "\\", strchr (cptr, '/') ? "/" : "\\", strchr (cptr, '/') ? "/" : "\\");
+        char sep = sim_file_path_separator;         /* Default to host path separator */
+
+        if ((cptr != NULL) && (strchr (cptr, '/')))
+            sep = '/';
+        if ((cptr != NULL) && (strchr (cptr, '\\')))
+            sep = '\\';
+        snprintf(nbuf, sizeof (nbuf), "\"%s%s%cLibrary%cPreferences%csimh.ini\"", cptr2 ? cptr2 : "", cptr ? cptr : "", sep, sep, sep);
         stat = docmdp->action (-1, nbuf);                   /* simh.ini proc cmd file */
         }
     if (SCPE_BARE_STATUS(stat) == SCPE_OPENERR)
