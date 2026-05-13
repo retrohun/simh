@@ -3515,7 +3515,7 @@ for (tmr=0; tmr<=SIM_NTIMERS; tmr++) {
 return FALSE;
 }
 
-t_bool sim_timer_cancel (UNIT *uptr)
+t_stat sim_timer_cancel (UNIT *uptr)
 {
 int32 tmr;
 
